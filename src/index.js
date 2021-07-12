@@ -1,42 +1,26 @@
-import ReactDOM from "react-dom";
-import React from "react";
+//timer
+import ReactDOM from 'react-dom';
+import React from 'react';
 
-class Clock extends React.Component {
+class Timer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { date: new Date() };
+		this.state = { seconds: 0 };
 	}
-
-	componentDidMount() {
-		this.timerID = setInterval(() => this.tick(), 1000);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
 	tick() {
-		this.setState({ date: new Date() });
+		this.setState((state) => ({
+			seconds: state.seconds + 1,
+		}));
 	}
-
+	componentDidMount() {
+		this.interval = setInterval(() => this.tick(), 1000);
+	}
+	/*componentWillUnmount() {
+		clearInterval(this.interval);
+	}*/
 	render() {
-		return (
-			<div>
-				<h1>Hello, World2!</h1>
-				<h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-			</div>
-		);
+		return <h1>{this.state.seconds}</h1>;
 	}
 }
 
-function App() {
-	return (
-		<div>
-			<Clock />
-			<Clock />
-			<Clock />
-		</div>
-	);
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Timer />, document.getElementById('root'));
