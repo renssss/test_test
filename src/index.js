@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Remakable from 'remarkable-react';
 class MarkdownEditor extends React.Component {
-	constructor() {
+	constructor(props) {
 		super(props);
 		this.md = new Remarkable();
 		this.handleChange = this.handleChange.bind(this);
