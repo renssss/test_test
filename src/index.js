@@ -1,26 +1,34 @@
-//timer
-import ReactDOM from 'react-dom';
 import React from 'react';
-
-class Timer extends React.Component {
-	constructor(props) {
+import ReactDOM from 'react-dom';
+import Remakable from 'remarkable';
+class MarkdownEditor extends React.Component {
+	constructor() {
 		super(props);
-		this.state = { seconds: 0 };
+		this.md = new Remarkable();
+		this.handleChange = this.handleChange.bind(this);
+		this.state = { value: 'Привет, **мир**!' };
 	}
-	tick() {
-		this.setState((state) => ({
-			seconds: state.seconds + 1,
-		}));
+	handleChange(e) {
+		this.setState({ value: e.target.value });
 	}
-	componentDidMount() {
-		this.interval = setInterval(() => this.tick(), 1000);
+	getRawMarkup() {
+		return { __html: this.md.render(this.state.value) };
 	}
-	/*componentWillUnmount() {
-		clearInterval(this.interval);
-	}*/
 	render() {
-		return <h1>{this.state.seconds}</h1>;
+		return (
+			<div className="MarkdownEditor">
+				<h3>Редактор</h3>
+				<label htmlFor="markdown-content">Введите что-нибудь</label>
+				<textarea
+					id="markdown-content"
+					onChange={this.handleChange}
+					defaultValue={this.state.value}
+				/>
+				<h3>Вывод</h3>
+				<div className="content" dangerouslySetInnerHTML={this.getRawMarkup} />
+			</div>
+		);
 	}
 }
 
-ReactDOM.render(<Timer />, document.getElementById('root'));
+ReactDOM.render(<MarkdownEditor />, document.getElementById('root'));
