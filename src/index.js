@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Remakable from 'remarkable';
+import Remakable from 'remarkable-react';
 class MarkdownEditor extends React.Component {
 	constructor() {
 		super(props);
