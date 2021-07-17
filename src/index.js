@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Remakable from 'remarkable-react';
+import { Remarkable } from 'remarkable';
 class MarkdownEditor extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,13 +19,18 @@ class MarkdownEditor extends React.Component {
 			<div className="MarkdownEditor">
 				<h3>Редактор</h3>
 				<label htmlFor="markdown-content">Введите что-нибудь</label>
+				<br />
+				<br />
 				<textarea
 					id="markdown-content"
 					onChange={this.handleChange}
 					defaultValue={this.state.value}
 				/>
 				<h3>Вывод</h3>
-				<div className="content" dangerouslySetInnerHTML={this.getRawMarkup} />
+				<div
+					className="content"
+					dangerouslySetInnerHTML={this.getRawMarkup()}
+				/>
 			</div>
 		);
 	}
