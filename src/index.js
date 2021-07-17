@@ -1,39 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Remarkable } from 'remarkable';
-class MarkdownEditor extends React.Component {
+
+function WarningBanner(props) {
+	if (!props.warn) {
+		return null;
+	}
+	return <div className="warning">Предупреждение!</div>;
+}
+
+class Page extends Component {
 	constructor(props) {
 		super(props);
-		this.md = new Remarkable();
-		this.handleChange = this.handleChange.bind(this);
-		this.state = { value: 'Привет, **мир**!' };
+		this.state = { showWarning: true };
+		this.handleToggleClick = this.handleToggleClick.bind(this);
 	}
-	handleChange(e) {
-		this.setState({ value: e.target.value });
+
+	handleToggleClick() {
+		this.setState((state) => ({ showWarning: !state.showWarning }));
 	}
-	getRawMarkup() {
-		return { __html: this.md.render(this.state.value) };
-	}
+
 	render() {
 		return (
-			<div className="MarkdownEditor">
-				<h3>Редактор</h3>
-				<label htmlFor="markdown-content">Введите что-нибудь</label>
-				<br />
-				<br />
-				<textarea
-					id="markdown-content"
-					onChange={this.handleChange}
-					defaultValue={this.state.value}
-				/>
-				<h3>Вывод</h3>
-				<div
-					className="content"
-					dangerouslySetInnerHTML={this.getRawMarkup()}
-				/>
+			<div>
+				<WarningBanner warn={this.state.showWarning} />
+				<button onClick={this.handleToggleClick}>
+					{this.state.showWarning ? 'Спрятать' : 'Показать'}
+				</button>
 			</div>
 		);
 	}
 }
 
-ReactDOM.render(<MarkdownEditor />, document.getElementById('root'));
+ReactDOM.render(<Page />, document.getElementById('root'));
