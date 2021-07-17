@@ -1,1 +1,2 @@
-{  "singleQuote": true,  "jsxSingleQuote": false}
+{  "singleQuote": true,  "jsxSingleQuote": false, "trailingComma": "none"
+}

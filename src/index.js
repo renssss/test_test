@@ -1,34 +1,41 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+// id's must be unique
 
-function WarningBanner(props) {
-	if (!props.warn) {
-		return null;
-	}
-	return <div className="warning">Предупреждение!</div>;
+function Blog(props) {
+	const sidebar = (
+		<ul>
+			{props.posts.map((post) => (
+				<li key={post.id}>{post.title}</li>
+			))}
+		</ul>
+	);
+	const content = props.posts.map((post) => (
+		<div key={post.id}>
+			<h3>{post.title}</h3>
+			<p>{post.content}</p>
+		</div>
+	));
+
+	return (
+		<div>
+			{sidebar}
+			<hr />
+			{content}
+		</div>
+	);
 }
 
-class Page extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { showWarning: true };
-		this.handleToggleClick = this.handleToggleClick.bind(this);
+const posts = [
+	{
+		id: 1,
+		title: 'Привет, мир!',
+		content: 'Добро пожаловать в документацию React!'
+	},
+	{
+		id: 2,
+		title: 'Установка',
+		content: 'React можно установить из npm'
 	}
-
-	handleToggleClick() {
-		this.setState((state) => ({ showWarning: !state.showWarning }));
-	}
-
-	render() {
-		return (
-			<div>
-				<WarningBanner warn={this.state.showWarning} />
-				<button onClick={this.handleToggleClick}>
-					{this.state.showWarning ? 'Спрятать' : 'Показать'}
-				</button>
-			</div>
-		);
-	}
-}
-
-ReactDOM.render(<Page />, document.getElementById('root'));
+];
+ReactDOM.render(<Blog posts={posts} />, document.getElementById('root'));
