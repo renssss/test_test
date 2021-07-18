@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// id's must be unique
 
-function Blog(props) {
-	const sidebar = (
-		<ul>
-			{props.posts.map((post) => (
-				<li key={post.id}>{post.title}</li>
-			))}
-		</ul>
-	);
-	const content = props.posts.map((post) => (
-		<div key={post.id}>
-			<h3>{post.title}</h3>
-			<p>{post.content}</p>
-		</div>
-	));
-
-	return (
-		<div>
-			{sidebar}
-			<hr />
-			{content}
-		</div>
-	);
-}
-
-const posts = [
-	{
-		id: 1,
-		title: 'Привет, мир!',
-		content: 'Добро пожаловать в документацию React!'
-	},
-	{
-		id: 2,
-		title: 'Установка',
-		content: 'React можно установить из npm'
+class NameForm extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { value: '' };
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-];
-ReactDOM.render(<Blog posts={posts} />, document.getElementById('root'));
+
+	handleChange(event) {
+		this.setState({ value: event.target.value });
+	}
+
+	handleSubmit(event) {
+		alert('Отправленное имя: ' + this.state.value);
+		event.preventDefault();
+	}
+
+	render() {
+		return (
+			<form onSubmit={this.handleSubmit}>
+				<label>
+					Имя:
+					<input
+						type="text"
+						value={this.state.value}
+						onChange={this.handleChange}
+					/>
+				</label>
+				<input type="submit" value="Отправить" />
+			</form>
+		);
+	}
+}
+ReactDOM.render(<NameForm />, document.getElementById('root'));
